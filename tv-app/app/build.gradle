@@ -1,0 +1,19 @@
+plugins { id 'com.android.application' }
+def env = new Properties(); def envFile = rootProject.file('../.env'); if (envFile.exists()) envFile.withInputStream { env.load(it) }
+def need = { k -> def v = env.getProperty(k); if (!v) throw new GradleException(k + ' is missing from .env. Run scripts/setup_cloud.sh first.'); v.trim() }
+android {
+  namespace 'tv.home.app'; compileSdk 36
+  defaultConfig { applicationId 'tv.home.app'; minSdk 26; targetSdk 34; versionCode 1; versionName '0.1'; buildConfigField 'String','APP_TOKEN',"\"${need('APP_TOKEN')}\""; buildConfigField 'String','API_BASE',"\"${need('WORKER_URL')}\"" }
+  buildFeatures { buildConfig true }
+  compileOptions { coreLibraryDesugaringEnabled true; sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+  packaging { resources { excludes += ['META-INF/**'] } }
+  lint { abortOnError false; checkReleaseBuilds false }
+}
+dependencies {
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_nio:2.1.5'
+  implementation 'androidx.media3:media3-exoplayer:1.8.0'
+  implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.26.5'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+  implementation 'com.github.bumptech.glide:glide:4.16.0'
+  implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
+}

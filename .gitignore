@@ -1,0 +1,14 @@
+.env
+taste.md
+worker/wrangler.jsonc
+worker/node_modules/
+worker/.wrangler/
+worker/catalog/*.jsonl
+worker/catalog/*state*.json
+tv-app/local.properties
+tv-app/.gradle/
+tv-app/build/
+tv-app/app/build/
+design/sounds/
+__pycache__/
+.DS_Store

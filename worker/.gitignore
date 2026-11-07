@@ -1,0 +1,5 @@
+node_modules/
+catalog/*.jsonl
+catalog/pull_state.json
+.wrangler/
+catalog/ingest_state.json
