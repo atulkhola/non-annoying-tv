@@ -1,4 +1,4 @@
-# TV Home: design system and build spec
+# Non-Annoying TV: design system and build spec
 
 A personal, tvOS-feel home screen for Google TV. This spec covers the grid, tokens, components, screens, edge cases, glass, motion and sound.
 

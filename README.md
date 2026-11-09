@@ -1,10 +1,14 @@
-# TV Home
+# Non-Annoying TV
 
-A home screen for your Google TV that knows what your household likes.
+A home screen for Google TV that knows what your household likes, and skips the annoying part.
+
+Sakshi and I love watching films together, mostly mind-bending thrillers. The watching was never the problem. Getting to it was. First you hunt for something with a good IMDb rating. Then you check which app has it. Then it's on none of the apps you pay for, so you cast it from the laptop, and every time you want to pause, somebody has to get up. Again. And again.
+
+So one weekend I gave up, redesigned our TV home in Figma and got Claude to build it. This is that home screen.
 
 Say what you feel like watching, in your own messy words. Claude works out what you meant, finds real titles, shows IMDb ratings up front, and one press opens the title in the app you pay for. Anything you don't have opens in Stremio. Your rows are planned for you from what you've told it, and they get better as you use it.
 
-It sits on top of Google TV. It isn't a new operating system, and Google's home is always one click away.
+It sits on top of Google TV. It isn't a new operating system, and Google's own home is always one click away (for the days you miss being annoyed).
 
 ## What you bring
 

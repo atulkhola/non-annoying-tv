@@ -1,9 +1,9 @@
 ---
-name: TV Home
+name: Non-Annoying TV
 description: A full-screen trailer is the home screen, and speech reshapes it.
 ---
 
-# TV Home design
+# Non-Annoying TV design
 
 `design/SPEC.md` is the full system: grid, type, colour, glass, motion, sound, components, screens and edge cases. `design/tokens.json` holds every value. This file only records the point of view.
 

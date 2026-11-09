@@ -10,7 +10,7 @@ start=json.load(open(S))['n'] if os.path.exists(S) else 0
 B=40
 for i in range(start,len(rows),B):
     b=[{k:r.get(k) for k in('id','title','type','year','rating','imdb','runtime','seasons','overview','genres','cast','options','langs','poster','backdrop','logo','trailer','pop','orig')} for r in rows[i:i+B]]
-    q=urllib.request.Request(URL+'/admin/ingest',data=json.dumps(b).encode(),headers={'authorization':'Bearer '+T,'content-type':'application/json','user-agent':'tv-home'})
+    q=urllib.request.Request(URL+'/admin/ingest',data=json.dumps(b).encode(),headers={'authorization':'Bearer '+T,'content-type':'application/json','user-agent':'non-annoying-tv'})
     for a in range(4):
         try: urllib.request.urlopen(q,timeout=60).read(); break
         except urllib.error.HTTPError as e:

@@ -1,6 +1,6 @@
 # Setup, for Claude Code
 
-You're setting up TV Home for someone who may not be technical. Go one step at a time, and explain each step in a sentence before you do it. Never print their keys, and never commit `.env` or `taste.md`.
+You're setting up Non-Annoying TV for someone who may not be technical. Go one step at a time, and explain each step in a sentence before you do it. Never print their keys, and never commit `.env` or `taste.md`.
 
 ## 1. Check the tools
 

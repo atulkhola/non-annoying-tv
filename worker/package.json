@@ -1,5 +1,5 @@
 {
-  "name": "tv-home-worker",
+  "name": "non-annoying-tv-worker",
   "private": true,
   "type": "module",
   "scripts": {

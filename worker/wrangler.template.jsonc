@@ -1,11 +1,11 @@
 {
-  "name": "tv-home",
+  "name": "non-annoying-tv",
   "main": "src/worker.js",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "ai": { "binding": "AI" },
-  "d1_databases": [{ "binding": "DB", "database_name": "tv_home", "database_id": "__D1_ID__" }],
-  "vectorize": [{ "binding": "VEC", "index_name": "tv-home-titles" }],
+  "d1_databases": [{ "binding": "DB", "database_name": "non_annoying_tv", "database_id": "__D1_ID__" }],
+  "vectorize": [{ "binding": "VEC", "index_name": "non-annoying-tv-titles" }],
   "triggers": { "crons": ["17 21 * * *", "41 * * * *"] },
   "vars": { "SERVICES": "__SERVICES__", "COUNTRY": "__COUNTRY__", "CATALOGS": "__CATALOGS__" }
 }

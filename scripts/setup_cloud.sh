@@ -19,8 +19,8 @@ npm install --silent
 npx wrangler whoami 2>&1 | grep -q 'You are logged in' || npx wrangler login
 
 echo "Database"
-d1id() { npx wrangler d1 list --json | python3 -c "import json,sys; print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='tv_home'),''))"; }
-ID=$(d1id); if [ -z "$ID" ]; then npx wrangler d1 create tv_home >/dev/null; ID=$(d1id); fi
+d1id() { npx wrangler d1 list --json | python3 -c "import json,sys; print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='non_annoying_tv'),''))"; }
+ID=$(d1id); if [ -z "$ID" ]; then npx wrangler d1 create non_annoying_tv >/dev/null; ID=$(d1id); fi
 [ -n "$ID" ] || { echo "Couldn't create the database."; exit 1; }
 python3 - "$ID" <<'PY'
 import os,sys
@@ -28,14 +28,14 @@ s=open('wrangler.template.jsonc').read().replace('__D1_ID__',sys.argv[1])
 for k in ('SERVICES','COUNTRY','CATALOGS'): s=s.replace(f'__{k}__',os.environ[k])
 open('wrangler.jsonc','w').write(s)
 PY
-npx wrangler d1 execute tv_home --remote --file schema.sql --yes >/dev/null
+npx wrangler d1 execute non_annoying_tv --remote --file schema.sql --yes >/dev/null
 
 echo "Search index"
-if ! npx wrangler vectorize get tv-home-titles >/dev/null 2>&1; then
-  npx wrangler vectorize create tv-home-titles --dimensions=384 --metric=cosine >/dev/null
+if ! npx wrangler vectorize get non-annoying-tv-titles >/dev/null 2>&1; then
+  npx wrangler vectorize create non-annoying-tv-titles --dimensions=384 --metric=cosine >/dev/null
 fi
-HAVE=$(npx wrangler vectorize list-metadata-index tv-home-titles 2>/dev/null || true)
-index() { echo "$HAVE" | grep -qw "$1" || npx wrangler vectorize create-metadata-index tv-home-titles --propertyName="$1" --type="$2" >/dev/null; }
+HAVE=$(npx wrangler vectorize list-metadata-index non-annoying-tv-titles 2>/dev/null || true)
+index() { echo "$HAVE" | grep -qw "$1" || npx wrangler vectorize create-metadata-index non-annoying-tv-titles --propertyName="$1" --type="$2" >/dev/null; }
 index type string; index orig string; index year number; index runtime number
 for l in hin eng tam tel mal kan; do index "has_$l" boolean; done
 

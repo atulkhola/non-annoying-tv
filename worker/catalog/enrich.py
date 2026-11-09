@@ -16,7 +16,7 @@ def go(d):
     m={}
     for a in range(2):
         try:
-            m=json.load(urllib.request.urlopen(urllib.request.Request(f"https://v3-cinemeta.strem.io/meta/{t}/{d['id']}.json",headers={'User-Agent':'tv-home'}),timeout=15)).get('meta') or {}; break
+            m=json.load(urllib.request.urlopen(urllib.request.Request(f"https://v3-cinemeta.strem.io/meta/{t}/{d['id']}.json",headers={'User-Agent':'non-annoying-tv'}),timeout=15)).get('meta') or {}; break
         except Exception: time.sleep(1)
     tr=[(x.get('title') or '',x.get('ytId')) for x in (m.get('trailerStreams') or []) if x.get('ytId')]
     c=[y for n,y in tr if not BAD.search(n)]

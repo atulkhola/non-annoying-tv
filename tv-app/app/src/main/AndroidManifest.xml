@@ -5,7 +5,7 @@
   <queries>
     <package android:name="com.netflix.ninja"/><package android:name="com.amazon.amazonvideo.livingroom"/><package android:name="in.startv.hotstar"/><package android:name="com.sonyliv"/><package android:name="com.stremio.one"/><package android:name="com.google.android.youtube.tv"/><package android:name="com.google.android.apps.tv.launcherx"/>
   </queries>
-  <application android:label="Home" android:banner="@drawable/banner" android:icon="@drawable/banner" android:usesCleartextTraffic="false" android:largeHeap="true" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+  <application android:label="Non-Annoying TV" android:banner="@drawable/banner" android:icon="@drawable/banner" android:usesCleartextTraffic="false" android:largeHeap="true" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
     <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask" android:screenOrientation="landscape" android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
       <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LEANBACK_LAUNCHER"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
     </activity>

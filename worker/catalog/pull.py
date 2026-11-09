@@ -10,7 +10,7 @@ run=0
 while not st['done'] and run<CAP:
     q=dict(Q)
     if st['cursor']: q['cursor']=st['cursor']
-    r=urllib.request.Request('https://api.movieofthenight.com/v4/shows/search/filters?'+urllib.parse.urlencode(q),headers={'X-API-Key':K,'User-Agent':'tv-home'})
+    r=urllib.request.Request('https://api.movieofthenight.com/v4/shows/search/filters?'+urllib.parse.urlencode(q),headers={'X-API-Key':K,'User-Agent':'non-annoying-tv'})
     try: d=json.load(urllib.request.urlopen(r,timeout=30))
     except urllib.error.HTTPError as e:
         print('stop',e.code,e.read()[:160],flush=True); break
