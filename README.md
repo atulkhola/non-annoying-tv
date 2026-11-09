@@ -6,50 +6,54 @@ Sakshi and I love watching films together, mostly mind-bending thrillers. The wa
 
 So one weekend I gave up, redesigned our TV home in Figma and got Claude to build it. This is that home screen.
 
-Say what you feel like watching, in your own messy words. Claude works out what you meant, finds real titles, shows IMDb ratings up front, and one press opens the title in the app you pay for. Anything you don't have opens in Stremio. Your rows are planned for you from what you've told it, and they get better as you use it.
+You tell it what you feel like watching, in your own messy words, the way you'd say it to the person next to you on the sofa. Claude works out what you meant and finds real titles, with the IMDb rating right there so nobody has to go and check. One press opens it in the app you already pay for. If you don't have it anywhere, it opens in Stremio. The rows on the home screen are planned around what you've told it about yourselves, and they get better the more you use it.
 
 It sits on top of Google TV. It isn't a new operating system, and Google's own home is always one click away (for the days you miss being annoyed).
 
-## What you bring
+## What you'll need
 
-Everything runs on your own accounts. This repo contains no keys, no accounts and nobody else's data.
+Everything runs on your own accounts. There are no keys in here, no accounts, and nobody else's data. Including mine.
 
-- A TV running Google TV or Android TV, with developer options on
+- A TV running Google TV or Android TV, with developer options switched on
 - A Mac or Linux computer with [Claude Code](https://claude.com/claude-code)
-- A [Cloudflare](https://cloudflare.com) account. The paid Workers plan is worth having once you use this daily
-- An [Anthropic API key](https://console.anthropic.com). A Claude subscription doesn't include API access, and every search costs a little
-- A [Movie of the Night](https://www.movieofthenight.com/about/api) key, for what's streaming where
-- The Stremio app on your TV, if you want a home for titles you don't subscribe to. It's optional
+- A [Cloudflare](https://cloudflare.com) account. Once you're using this every day, the paid Workers plan is worth it
+- An [Anthropic API key](https://console.anthropic.com). Heads up: a Claude subscription doesn't include API access, and every search costs a little
+- A [Movie of the Night](https://www.movieofthenight.com/about/api) key, which is how it knows what's streaming where
+- The Stremio app on your TV, if you want somewhere for the titles you don't subscribe to. Totally optional
 
-## Install
+## Setting it up
 
-Clone this repo, open Claude Code inside it, and paste:
+I wanted this to be something a non-technical friend could install, so Claude does the setup with you. Clone the repo, open Claude Code inside it, and paste:
 
 ```
 Read SETUP.md and set this up for me.
 ```
 
-Claude walks you through it, asks what you like to watch, and writes your taste file.
+It goes one step at a time, explains each step before it does it, and at some point asks what the two of you (or four, or one) like to watch. That conversation becomes your taste file.
 
-## Make it yours
+## Making it yours
 
-| What | Where |
+| If you want to change | Go here |
 |---|---|
-| What it knows about you | `taste.md`, then `scripts/push_taste.sh` |
+| What it knows about you | `taste.md`, then run `scripts/push_taste.sh` |
 | Colours, type, spacing, motion | `design/tokens.json`, then `python3 design/build_tokens.py` |
-| UI sounds | `design/build_sounds.py` |
+| The UI sounds | `design/build_sounds.py` |
 | The little TV in the search chip | `design/build_mark.py` |
-| Your country and services | `.env`, then `scripts/setup_cloud.sh`. Services outside India also need their app added in `tv-app/app/src/main/java/tv/home/app/Title.java`. Ask Claude |
+| Your country and your services | `.env`, then `scripts/setup_cloud.sh`. If you're outside India, your services also need their app added in `tv-app/app/src/main/java/tv/home/app/Title.java`. Ask Claude, it knows |
 
-## Connect your own memory
+## Plugging in your own memory
 
-The default is a plain taste file. If you have a note taker, a journal or anything else that knows what you've been talking about, send it one line at a time:
+By default it learns from a plain taste file. That works fine. But a taste file doesn't know that a friend told you about Dark at lunch last week and you both sounded keen.
+
+I wear a note taker that hears my day, so I wanted the TV to hear about the films that come up in it. If you have anything like that (a note taker, a journal, a notes app you actually use), send it one line at a time:
 
 ```bash
 scripts/add_note.sh "A friend recommended Dark and we both sounded keen."
 ```
 
-Or call `POST /admin/note` from any automation, with your `APP_TOKEN` as a bearer token and `{"note": "..."}` as the body. Claude reads the newest 60 notes on every search and every time it plans your rows. Send film and TV notes only, and get the agreement of anyone who shows up in them.
+Or call `POST /admin/note` from any automation, with your `APP_TOKEN` as a bearer token and `{"note": "..."}` as the body. Claude reads the newest 60 notes on every search and every time it plans your rows.
+
+Two rules, please. Only send notes about films and shows. And if other people show up in them, ask them first.
 
 ## How it works
 
@@ -62,21 +66,23 @@ your words -> Google's speech on the TV -> your Cloudflare Worker -> Claude
               rows on your TV -> Netflix, Prime, JioHotstar or Stremio
 ```
 
-- `tv-app/` is the Android app
+- `tv-app/` is the Android app that runs on the TV
 - `worker/` is the engine: Cloudflare Workers, D1, Vectorize and Workers AI
-- `design/` is the design system. Read `design/SPEC.md` for all of it
+- `design/` is the design system. `design/SPEC.md` has all of it, probably in more detail than anyone needs
 
-## Good to know
+## Before you get too excited
 
-- **It's been tested on one TV.** It's a Google TV on Android 14. The Home button takeover and voice both read Google TV's own screens through an accessibility service, so they may need changes on other models.
-- **Your data stays on your accounts.** Your requests go to your own Worker and to Anthropic. The accessibility service runs on the TV and only acts on Google's home and voice screens.
-- **Your token sits inside the app you build.** Don't share your APK.
-- **This doesn't include any way to play video from add-ons.** Titles open in the apps on your TV, and what you run inside them is up to you. Please respect the rules of the services you use.
-- **Trailers** come through [NewPipe Extractor](https://github.com/TeamNewPipe/NewPipeExtractor), which reads YouTube directly. YouTube can break this at any time.
+- **It has been tested on exactly one TV.** Ours, a Google TV on Android 14. The Home button takeover and the voice search both read Google TV's own screens through an accessibility service, so on other models they might need some fixing.
+- **Your data stays on your accounts.** Your requests go to your own Worker and to Anthropic, and that's it. The accessibility service runs on the TV and only acts on Google's home and voice screens.
+- **Your token is baked into the app you build.** So please don't share your APK.
+- **It doesn't play video from add-ons.** Titles open in the apps on your TV, and what you run inside them is your call. Please respect the rules of the services you use.
+- **Trailers come through [NewPipe Extractor](https://github.com/TeamNewPipe/NewPipeExtractor),** which reads YouTube directly. YouTube can break that whenever it feels like it.
 
 ## Credits
 
-Streaming availability by the [Streaming Availability API](https://www.movieofthenight.com/about/api) from Movie of the Night. Their terms require this credit, so the app shows it on its About screen. Ratings and artwork through Cinemeta. Type is the [Geist](https://vercel.com/font) family under the SIL Open Font License. Not affiliated with Google, Netflix, Stremio or Anthropic.
+Streaming availability comes from the [Streaming Availability API](https://www.movieofthenight.com/about/api) by Movie of the Night. Their terms ask for this credit, so the app also shows it on its About screen. Ratings and artwork come through Cinemeta. The type is the [Geist](https://vercel.com/font) family, under the SIL Open Font License.
+
+Not affiliated with Google, Netflix, Stremio or Anthropic. Just a guy who got tired of getting up.
 
 ## Licence
 
